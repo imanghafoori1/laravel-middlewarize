@@ -1,0 +1,45 @@
+{
+    "name": "imanghafoori/laravel-middlewarize",
+    "description": "Use laravel middlewares on any method calls in your app",
+    "keywords": ["laravel", "laravel-middlewares", "laravel5-package", "PHP", "laravel5"],
+    "license": "MIT",
+    "homepage": "https://github.com/imanghafoori1/laravel-middlewarize",
+    "authors": [
+        {
+            "name": "Iman Ghafoori",
+            "email": "imanghafoori1@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3"
+    },
+    "autoload-dev": {
+        "classmap": ["tests/TestCase.php"]
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.0",
+        "mockery/mockery": "^0.9.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Imanghafoori\\Middlewarize\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "suggest": {
+        "imanghafoori/laravel-heyman": "It allows to write expressive code to authorize, validate and authenticate.",
+        "imanghafoori/laravel-decorator": "Allows you to easily apply the decorator pattern.",
+        "imanghafoori/laravel-terminator": "Gives you opportunity to refactor your controllers.",
+        "imanghafoori/laravel-anypass": " Allows you login with any password in local environment.",
+        "imanghafoori/laravel-masterpass": "You can easily set a master password without code change."
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Imanghafoori\\Middlewarize\\MiddlewarizeServiceProvider"
+            ]
+        }
+    }
+}
