@@ -1,6 +1,6 @@
 # Laravel Middlewarize
 
-## Decorator pattern in in laravel
+## Decorator pattern in laravel
 
 
 ### Installation : 
@@ -9,7 +9,40 @@
 composer require imanghafoori/laravel-middlewarize
 ```
 
+You can use middlewares to decorate any method calls on any object.
 
+### Use Cases:
+
+For better syntax, you better use the `Middlewarable` trait on your class.
+
+For example a repository class :
+
+```php
+class UserRepository
+{
+    use Middlewarable;
+    
+    public function find ($id) 
+    {
+        return User::find($id)
+    }
+    ...
+}
+
+```
+
+Now you can put middlewares around your method calls:
+
+```php
+
+public function show($id, UserRepository $repo)
+{
+    $user = $repo->middleware('cacher:fooKey,60 seconds')->find($id);
+}
+
+```
+
+Easy Peasy Yeah ?!
 
 
 
