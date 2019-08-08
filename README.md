@@ -1,11 +1,15 @@
 # Laravel Middlewarize
 
+## Decorator pattern in in laravel
+
 
 ### Installation : 
 
 ```
 composer require imanghafoori/laravel-middlewarize
 ```
+
+
 
 
 
