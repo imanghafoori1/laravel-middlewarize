@@ -28,11 +28,6 @@
         <log type="testdox-html" target="./log/testdox.html" />
     </logging>
     <filter>
-
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src/Utils</directory>
-        </whitelist>
-
         <blacklist>
             <directory>./src/vendor</directory>
         </blacklist>
