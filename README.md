@@ -24,14 +24,18 @@ class UserRepository
     
     public function find ($id) 
     {
-        return User::find($id)
+        return User::find($id);   ///    <----  we wanna cache it, right ?
     }
     ...
 }
 
 ```
 
-Now you can put middlewares to wrap your method calls:
+What would you do ?!
+
+Put cache logic in repo class? No, no. Put it in your call site ? Ugly.
+
+There is a built in middleware which you can you to cache your method call.
 
 ```php
 
