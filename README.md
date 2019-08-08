@@ -31,20 +31,26 @@ class UserRepository
 
 ```
 
-Now you can put middlewares around your method calls:
+Now you can put middlewares to wrap your method calls:
 
 ```php
 
 public function show($id, UserRepository $repo)
 {
-    $user = $repo->middleware('cacher:fooKey,60 seconds')->find($id);
+    $cachedUser = $repo->middleware('cacher:fooKey,60 seconds')->find($id);
 }
 
 ```
 
 Easy Peasy Yeah ?!
 
+You wanna use facades to call the repo ?!
 
+```
+
+$cachedUser = UserRepositoryFacade::middleware('cacher:fooKey,60 seconds')->find($id);
+
+```
 
 --------------------
 
