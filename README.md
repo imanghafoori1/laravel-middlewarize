@@ -46,7 +46,7 @@ Easy Peasy Yeah ?!
 
 You wanna use facades to call the repo ?!
 
-```
+```php
 
 $cachedUser = UserRepositoryFacade::middleware('cacher:fooKey,60 seconds')->find($id);
 
