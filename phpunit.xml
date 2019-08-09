@@ -8,7 +8,6 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false"
 >
     <testsuites>
         <testsuite name="Package Test Suite">
@@ -28,6 +27,10 @@
         <log type="testdox-html" target="./log/testdox.html" />
     </logging>
     <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+
         <blacklist>
             <directory>./src/vendor</directory>
         </blacklist>

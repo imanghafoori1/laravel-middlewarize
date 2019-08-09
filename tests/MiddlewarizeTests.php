@@ -30,7 +30,7 @@ class MiddlewarizeTests extends TestCase
 class MyClass 
 {
     use Middlewarable;
-    
+
     public function find($id)
     {
         return $id;

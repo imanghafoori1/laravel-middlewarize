@@ -1,15 +1,11 @@
 filter:
     excluded_paths:
+        - 'src/MiddlewarizeServiceProvider.php'
         - 'tests/*'
 
-build:
-    tests:
-        override:
-            -
-                command: 'vendor/bin/phpunit --coverage-clover=some-file'
-                coverage:
-                    file: 'some-file'
-                    format: 'clover'
+tools:
+    external_code_coverage: true
+
 checks:
     php:
         code_rating: true
