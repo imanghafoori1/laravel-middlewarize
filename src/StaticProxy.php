@@ -2,9 +2,9 @@
 
 namespace Imanghafoori\Middlewarize;
 
-class Proxy
+class StaticProxy
 {
-    private $callable;
+    private $obj;
 
     private $middlewares;
 
@@ -16,7 +16,7 @@ class Proxy
      */
     public function __construct($callable, $middlewares)
     {
-        $this->callable = $callable;
+        $this->obj = $callable;
         $this->middlewares = $middlewares;
     }
 
@@ -29,7 +29,7 @@ class Proxy
             ->send($params)
             ->through($this->middlewares)
             ->then(function ($params) use ($method) {
-                return call_user_func_array([$this->callable, $method], $params);
+                return call_user_func_array([$this->obj, $method], $params);
             });
     }
 }

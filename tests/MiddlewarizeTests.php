@@ -25,6 +25,13 @@ class MiddlewarizeTests extends TestCase
 
         (new MyClass())->middleware($cacher)->find(1);
     }
+
+    public function testHello3()
+    {
+        Cache::shouldReceive('remember')->once()->andReturn('hello');
+
+        MyClass::middlewared(CacheMiddleware::class.':foo,6 seconds')->static_find(1);
+    }
 }
 
 class MyClass 
@@ -32,6 +39,10 @@ class MyClass
     use Middlewarable;
 
     public function find($id)
+    {
+        return $id;
+    }
+    public static function static_find($id)
     {
         return $id;
     }
