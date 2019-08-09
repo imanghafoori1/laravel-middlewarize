@@ -24,9 +24,9 @@ You can use middlewares to decorate any method calls on any object.
 
 ### Use Cases:
 
-For better syntax, you better use the `Middlewarable` trait on your class.
+First of all, You should use the `\Imanghafoori\Middlewarize\Middlewarable` trait on your class.
 
-For example a repository class :
+For example consider a repository class:
 
 ```php
 class UserRepository
