@@ -49,7 +49,34 @@ What would you do ?!
 
 Put cache logic in repo class? No, no. Put it in your call site ? Ugly.
 
-There is a built in middleware which you can you to cache your method call.
+
+You define a middleware to wrap around the method you are calling :
+
+```php
+class CacheMiddleware
+{
+    public function handle($data, $next, $key, $ttl)
+    {
+        
+        if(\Cache::has($key)) {
+            return \Cache::get($key);
+        }
+       
+        $value = $next($data);
+        
+        \Cache::put($key, $value, $ttl);
+        
+        return $value;
+    }
+}
+```
+
+Then you can alias you middleware like any other class, in the config/app.php
+```php
+'cacher' => App\Middlewares\CacheMiddleware,
+```
+
+Now it is ready to :
 
 ```php
 
@@ -61,6 +88,8 @@ public function show($id, UserRepository $repo)
 ```
 
 Easy Peasy Yeah ?!
+
+Middlwares can come from packages, there is no a need for you to always define them.
 
 You wanna use facades to call the repo ?!
 
