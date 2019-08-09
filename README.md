@@ -10,6 +10,7 @@
 [![Build Status](https://travis-ci.org/imanghafoori1/laravel-middlewarize.svg?branch=master)](https://travis-ci.org/imanghafoori1/laravel-middlewarize)
 [![Monthly Downloads](https://poser.pugx.org/imanghafoori/laravel-middlewarize/d/monthly)](https://packagist.org/packages/imanghafoori/laravel-middlewarize)
 [![Code Coverage](https://scrutinizer-ci.com/g/imanghafoori1/laravel-middlewarize/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/imanghafoori1/laravel-middlewarize/?branch=master)
+[![Software License](https://img.shields.io/badge/license-MIT-blue.svg?style=round-square)](LICENSE.md)
 </p>
 
 
@@ -130,7 +131,15 @@ As always if you found this package useful and you want to encourage us to maint
 
 
 
-### More from the authors:
+## More from the author, to enjoy from:
+
+### Laravel Widgetize
+
+ :gem: A minimal yet powerful package to give a better structure and caching opportunity for your laravel apps.
+
+- https://github.com/imanghafoori1/laravel-widgetize
+
+------------
 
 
 ### Laravel HeyMan
