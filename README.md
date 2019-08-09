@@ -122,13 +122,8 @@ If you find an issue, or have a better way to do something, feel free to open an
 If you use laravel-widgetize in your open source project, create a pull request to provide it's url as a sample application in the README.md file. 
 
 
-### :exclamation: Security
-If you discover any security related issues, please use the `security tab` instead of using the issue tracker.
-
-
 ### :star: Your Stars Make Us Do More :star:
 As always if you found this package useful and you want to encourage us to maintain and work on it. Just press the star button to declare your willing.
-
 
 
 ## More from the author, to enjoy from:
