@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": "*",
+        "php": "^7.1.3",
         "illuminate/pipeline": "^5.5"
     },
     "autoload-dev": {
@@ -20,9 +20,8 @@
         }
     },
     "require-dev": {
-        "php": "*",
-        "orchestra/testbench": "*",
-        "mockery/mockery": "*"
+        "orchestra/testbench": "~3.0",
+        "mockery/mockery": "^0.9.9"
     },
     "autoload": {
         "psr-4": {
