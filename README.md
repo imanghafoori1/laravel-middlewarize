@@ -1,10 +1,7 @@
 
-<p align="center">
-    
-<h1 align="center"> Laravel Middlewarize </h1>
-<h2 align="center"> 
-Decorator pattern in laravel
-</h2>
+
+<h1> Laravel Middlewarize </h1>
+<h2> Decorator your method calls in laravel </h2>
 
     
 [![Maintainability](https://api.codeclimate.com/v1/badges/265609ba555d5fd06560/maintainability)](https://codeclimate.com/github/imanghafoori1/laravel-middlewarize/maintainability)
