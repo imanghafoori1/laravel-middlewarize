@@ -3,8 +3,8 @@
 namespace Imanghafoori\MiddlewarizeTests;
 
 use Illuminate\Support\Facades\Cache;
-use Imanghafoori\Middlewarize\CacheMiddleware;
 use Imanghafoori\Middlewarize\Middlewarable;
+use Imanghafoori\Middlewarize\CacheMiddleware;
 
 class MiddlewarizeTests extends TestCase
 {
@@ -17,11 +17,13 @@ class MiddlewarizeTests extends TestCase
 
     public function testHello2()
     {
-        $r = new MyClass();
         Cache::shouldReceive('remember')->once()->andReturn('hello');
-        $r->middleware(new CacheMiddleware2(function () {
+
+        $cacher = new CacheMiddleware2(function () {
             return 'foo';
-        }, '1 second'))->find(1);
+        }, '1 second');
+
+        (new MyClass())->middleware($cacher)->find(1);
     }
 }
 
