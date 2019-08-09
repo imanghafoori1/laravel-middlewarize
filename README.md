@@ -76,7 +76,7 @@ Then you can alias you middleware like any other class, in the config/app.php
 'cacher' => App\Middlewares\CacheMiddleware,
 ```
 
-Now it is ready to :
+Now it is ready to:
 
 ```php
 
@@ -97,6 +97,24 @@ You wanna use facades to call the repo ?!
 
 $cachedUser = UserRepositoryFacade::middleware('cacher:fooKey,60 seconds')->find($id);
 
+```
+
+You can also use objects as middlewares for more eloborated scnarios.
+
+
+#### Objects as middlewares
+```php
+
+$object = new CacheMiddleware(...);   //   <----- you send depedencies to it.
+
+$repo->middleware($object)->find($id);
+
+```
+
+#### Wrapping static methods:
+
+```php
+User::middlewared('...')->find($id);  //   <----- Here we are directly call it through an eloquent model.
 ```
 
 --------------------
