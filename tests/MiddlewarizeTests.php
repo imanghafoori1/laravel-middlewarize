@@ -4,7 +4,6 @@ namespace Imanghafoori\MiddlewarizeTests;
 
 use Illuminate\Support\Facades\Cache;
 use Imanghafoori\Middlewarize\Middlewarable;
-use Imanghafoori\Middlewarize\CacheMiddleware;
 
 class MiddlewarizeTests extends TestCase
 {
@@ -42,6 +41,7 @@ class MyClass
     {
         return $id;
     }
+
     public static function static_find($id)
     {
         return $id;
@@ -74,6 +74,17 @@ class CacheMiddleware2
         $t = $this->keyMaker;
 
         return Cache::remember($t($data), $ttl, function () use ($next, $data) {
+            return $next($data);
+        });
+    }
+}
+
+class CacheMiddleware
+{
+    public function handle($data, $next, $key, $ttl)
+    {
+        $ttl = \DateInterval::createFromDateString($ttl);
+        return Cache::remember($key, $ttl, function () use ($next, $data) {
             return $next($data);
         });
     }
