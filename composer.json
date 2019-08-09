@@ -26,10 +26,7 @@
     "autoload": {
         "psr-4": {
             "Imanghafoori\\Middlewarize\\": "src"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+        }
     },
     "suggest": {
         "imanghafoori/laravel-heyman": "It allows to write expressive code to authorize, validate and authenticate.",
