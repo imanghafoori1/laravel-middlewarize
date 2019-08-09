@@ -2,7 +2,9 @@
 
 namespace Imanghafoori\Middlewarize;
 
-class MiddlewarizeServiceProvider
+use Illuminate\Support\ServiceProvider;
+
+class MiddlewarizeServiceProvider extends ServiceProvider
 {
     public function register()
     {
