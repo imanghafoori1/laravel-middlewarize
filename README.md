@@ -1,8 +1,11 @@
-# Laravel Middlewarize
-
-## Decorator pattern in laravel
 
 <p align="center">
+    
+<h1 align="center"> Laravel Middlewarize </h1>
+<h2 align="center"> 
+Decorator pattern in laravel
+</h2>
+
     
 [![Maintainability](https://api.codeclimate.com/v1/badges/265609ba555d5fd06560/maintainability)](https://codeclimate.com/github/imanghafoori1/laravel-middlewarize/maintainability)
 <a href="https://scrutinizer-ci.com/g/imanghafoori1/laravel-middlewarize"><img src="https://img.shields.io/scrutinizer/g/imanghafoori1/laravel-middlewarize.svg?style=flat-square" alt="Quality Score"></img></a>
