@@ -205,7 +205,9 @@ As always if you found this package useful and you want to encourage us to maint
 ----------------
 
 <p align="center">
+  
     Logic will get you from a to z, imagination will take you everywhere.
     
     "Albert Einstein"
+    
 </p>
