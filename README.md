@@ -112,21 +112,23 @@ $repo->middleware($object)->find($id);
 #### Wrapping static methods:
 
 ```php
-User::middlewared('...')->find($id);  //   <----- Here we are directly call it through an eloquent model.
+User::middlewared('...')->find($id); //  <--- Here we are directly call it through an eloquent model.
 ```
 
 --------------------
 
 ### :raising_hand: Contributing 
-If you find an issue, or have a better way to do something, feel free to open an issue or a pull request.
-If you use laravel-widgetize in your open source project, create a pull request to provide it's url as a sample application in the README.md file. 
 
+If you find an issue, or have a better way to do something, feel free to open an issue or a pull request.
 
 ### :star: Your Stars Make Us Do More :star:
+
 As always if you found this package useful and you want to encourage us to maintain and work on it. Just press the star button to declare your willing.
 
+--------------------
 
-## More from the author, to enjoy from:
+
+## More from the author:
 
 ### Laravel Widgetize
 
@@ -134,7 +136,7 @@ As always if you found this package useful and you want to encourage us to maint
 
 - https://github.com/imanghafoori1/laravel-widgetize
 
-------------
+-------------------
 
 
 ### Laravel HeyMan
