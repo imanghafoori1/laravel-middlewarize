@@ -15,7 +15,7 @@
 
 
 
-### Installation : 
+### Installation: 
 
 ```
 composer require imanghafoori/laravel-middlewarize
@@ -48,7 +48,7 @@ What would you do ?!
 Put cache logic in repo class? No, no. Put it in your call site ? Ugly.
 
 
-You define a middleware to wrap around the method you are calling :
+You define a middleware to wrap around the method you are calling:
 
 ```php
 class CacheMiddleware
@@ -56,22 +56,27 @@ class CacheMiddleware
     public function handle($data, $next, $key, $ttl)
     {
         
-        if(\Cache::has($key)) {
-            return \Cache::get($key);
+        if(Cache::has($key)) {
+            return Cache::get($key);
         }
        
         $value = $next($data);
         
-        \Cache::put($key, $value, $ttl);
+        Cache::put($key, $value, $ttl);
         
         return $value;
     }
 }
 ```
 
-Then you can alias you middleware like any other class, in the config/app.php
+Since middlewares are resolved out of the laravel containerو you can pass any abstract string as a middleware and bind it on the IOC:
+
 ```php
-'cacher' => App\Middlewares\CacheMiddleware,
+public function boot()
+{
+    app()->singleton('cacher', CacheMiddleware::class);
+}
+
 ```
 
 Now it is ready to:
@@ -97,10 +102,10 @@ $cachedUser = UserRepositoryFacade::middleware('cacher:fooKey,60 seconds')->find
 
 ```
 
-You can also use objects as middlewares for more eloborated scnarios.
 
+#### Objects as middlewares:
 
-#### Objects as middlewares
+You can also use objects as middlewares for more eloborated scenarios.
 ```php
 
 $object = new CacheMiddleware(...);   //   <----- you send depedencies to it.
@@ -114,6 +119,30 @@ $repo->middleware($object)->find($id);
 ```php
 User::middlewared('...')->find($id); //  <--- Here we are directly call it through an eloquent model.
 ```
+
+### Testing:
+As we mentioned before middlewares are resolved out of the IOC, and that means you can easily swap them out while running your tests.
+
+```php
+
+class NullCacheMiddleware
+{
+    public function handle($data, $next, $key, $ttl)
+    {
+        return $next($data); // <--- this "null middleware" does nothing.
+    }
+}
+
+
+public function testSomeThing()
+{
+    app()->singleton('cacher', NullCacheMiddleware::class);  // <--- this causes to replace the cache middleware
+    $this->get('/home');
+}
+
+```
+
+Here we have neutralized the middleware to do "nothing" while the tests are running.
 
 --------------------
 
