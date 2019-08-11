@@ -85,7 +85,7 @@ Now it is ready to:
 
 public function show($id, UserRepository $repo)
 {
-    $cachedUser = $repo->middleware('cacher:fooKey,60 seconds')->find($id);
+    $cachedUser = $repo->middleware('cacher:fooKey,60')->find($id);
 }
 
 ```
@@ -146,9 +146,10 @@ Here we have neutralized the middleware to do "nothing" while the tests are runn
 
 --------------------
 
-### :raising_hand: Contributing 
+### :raising_hand: Contributing:
 
 If you find an issue, or have a better way to do something, feel free to open an issue or a pull request.
+
 
 ### :star: Your Stars Make Us Do More :star:
 
@@ -200,3 +201,11 @@ As always if you found this package useful and you want to encourage us to maint
 :gem: It allows you to decouple your eloquent models to reach a modular structure
 
 - https://github.com/imanghafoori1/eloquent-relativity
+
+----------------
+
+<p align="center">
+    Logic will get you from a to z, imagination will take you everywhere.
+    
+    "Albert Einstein"
+</p>
