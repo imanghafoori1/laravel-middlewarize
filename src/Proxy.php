@@ -25,12 +25,21 @@ class Proxy
     public function __call($method, $params)
     {
         $pipeline = new Pipeline(app());
+        
+        if (!is_string($this->callable)) {
+            $core = (function ($params) use ($method) {
+                return call_user_func_array($this, $method, $params);
+            })->bindTo($this->callable, $this->callable);
+        } else {
+            $core = function ($params) use ($method) {
+                return call_user_func_array($this->callable, $method, $params);
+            };
+        }
+
         return $pipeline
             ->via('handle')
             ->send($params)
             ->through($this->middlewares)
-            ->then((function ($params) use ($method) {
-                return call_user_func_array($this, $method, $params);
-            })->bindTo($this->callable, $this->callable));
+            ->then($core);
     }
 }
