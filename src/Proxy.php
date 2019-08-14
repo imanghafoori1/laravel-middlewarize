@@ -30,7 +30,7 @@ class Proxy
             ->send($params)
             ->through($this->middlewares)
             ->then((function ($params) use ($method) {
-               return ($this->$method(...$params));
+                return call_user_func_array($this, $method, $params);
             })->bindTo($this->callable, $this->callable));
     }
 }
