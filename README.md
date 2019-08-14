@@ -69,7 +69,7 @@ class CacheMiddleware
 }
 ```
 
-Since middlewares are resolved out of the laravel containerو you can pass any abstract string as a middleware and bind it on the IOC:
+Since middlewares are resolved out of the laravel container, you can pass any abstract string as a middleware and bind it on the IOC:
 
 ```php
 public function boot()
