@@ -48,20 +48,21 @@ What would you do ?!
 Put cache logic in repo class? No, no. Put it in your call site ? Ugly.
 
 
-You define a middleware to wrap around the method you are calling:
+You define a middleware to put code before and after the method you are calling:
 
 ```php
 class CacheMiddleware
 {
     public function handle($data, $next, $key, $ttl)
     {
-        
+        // 1. This part runs before method call
         if(Cache::has($key)) {
             return Cache::get($key);
         }
-       
-        $value = $next($data);
         
+        $value = $next($data);  // <--- 2. Runs the actual method
+        
+        // 3. This part runs after method
         Cache::put($key, $value, $ttl);
         
         return $value;
@@ -72,6 +73,7 @@ class CacheMiddleware
 Since middlewares are resolved out of the laravel container, you can pass any abstract string as a middleware and bind it on the IOC:
 
 ```php
+
 public function boot()
 {
     app()->singleton('cacher', CacheMiddleware::class);
@@ -92,10 +94,26 @@ public function show($id, UserRepository $repo)
 
 Easy Peasy Yeah ?!
 
-Middlwares can come from packages, there is no a need for you to always define them.
+### Multiple middlewares:
+
+```php
+
+public function show($id, UserRepository $repo)
+{
+    $cachedUser = $repo->middleware(
+      ['middle1', 'middle2',  'middle3']
+    )->find($id);
+}
+
+```
+
+The order they execute is like that:
+
+middle1 --> middle2 --> middle3 --> 'find' -> middle3 --> middle2  --> middle1
+
+### Middlewares on facades:
 
 You wanna use facades to call the repo ?!
-
 ```php
 
 $cachedUser = UserRepositoryFacade::middleware('cacher:fooKey,60 seconds')->find($id);
