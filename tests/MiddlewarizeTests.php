@@ -25,13 +25,20 @@ class MiddlewarizeTests extends TestCase
         (new MyClass())->middleware($cacher)->find(1);
     }
 
-    public function testItWillCallTheActualMethod()
+    public function testItWillCallTheActualStaticMethod()
     {
         $value = MyClass::middlewared(CacheMiddleware::class.':foo2,0 seconds')->static_find(1);
          
         $this->assertEquals($value, 1);
     }
-    
+
+    public function testItWillCallTheActualMethod()
+    {
+        $value = (new MyClass())->middleware(CacheMiddleware::class.':foo2,0 seconds')->find(1);
+
+        $this->assertEquals($value, 1);
+    }
+
     public function testItCanWorkForStaticMethods()
     {
         Cache::shouldReceive('remember')->once()->andReturn('hello');
