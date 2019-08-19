@@ -107,7 +107,7 @@ public function show($id, UserRepository $repo)
 
 The order they execute is like that:
 <p align="center">
-middle1 --> middle2 --> middle3 --> 'find' -> middle3 --> middle2  --> middle1
+   Start ===>   middle1 --> middle2 --> middle3 --->(  find  )---> middle3 --> middle2  --> middle1   ===> result !!!
 </p>
 
 ### Middlewares on facades:
@@ -118,7 +118,6 @@ You wanna use facades to call the repo ?!
 $cachedUser = UserRepositoryFacade::middleware('cacher:fooKey,60 seconds')->find($id);
 
 ```
-
 
 #### Objects as middlewares:
 
@@ -131,10 +130,10 @@ $repo->middleware($object)->find($id);
 
 ```
 
-#### Wrapping static methods:
+#### Middleware on static methods:
 
 ```php
-User::middlewared('...')->find($id); //  <--- Here we are directly call it through an eloquent model.
+User::middlewared('...')->find($id); //  <--- you should put 'middlewarable' trait on eloquent model.
 ```
 
 ### Testing:
