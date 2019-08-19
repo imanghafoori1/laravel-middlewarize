@@ -32,11 +32,11 @@ For example consider a repository class:
 ```php
 class UserRepository
 {
-    use Middlewarable;
+    use Middlewarable;  //    <----   Put middleware on class
     
     public function find ($id) 
     {
-        return User::find($id);   ///    <----  we wanna cache it, right ?
+        return User::find($id);   //    <----  we wanna cache it, right ?
     }
     ...
 }
