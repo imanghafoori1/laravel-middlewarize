@@ -49,7 +49,7 @@ Put cache logic in repo class? No, no. Put it in your call site ? Ugly.
 
 You define a middleware to put code before and after the method you are calling:
 
-#### Define a Middleware
+### Define a Middleware
 
 ```php
 
@@ -78,12 +78,12 @@ Since middlewares are resolved out of the laravel container, you can pass any ab
 
 public function boot()
 {
-    app()->singleton('cacher', CacheMiddleware::class);
+    app()->singleton('cacher', CacheMiddleware::class);  // <---- Optional
 }
 
 ```
 
-Now it is ready to:
+### Use the Middleware:
 
 ```php
 
@@ -96,22 +96,19 @@ public function show($id, UserRepository $repo)
 
 Easy Peasy Yeah ?!
 
+
 ### Multiple middlewares:
-
 ```php
-
 public function show($id, UserRepository $repo)
 {
-    $cachedUser = $repo->middleware(
-      ['middle1', 'middle2',  'middle3']
-    )->find($id);
+    $cachedUser = $repo->middleware(['middle1', 'middle2', 'middle3'])->find($id);
 }
-
 ```
 
 The order they execute is like that:
-
+<p align="center">
 middle1 --> middle2 --> middle3 --> 'find' -> middle3 --> middle2  --> middle1
+</p>
 
 ### Middlewares on facades:
 
