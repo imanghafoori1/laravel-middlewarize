@@ -47,10 +47,12 @@ What would you do ?!
 
 Put cache logic in repo class? No, no. Put it in your call site ? Ugly.
 
-
 You define a middleware to put code before and after the method you are calling:
 
+#### Define a Middleware
+
 ```php
+
 class CacheMiddleware
 {
     public function handle($data, $next, $key, $ttl)
