@@ -2,8 +2,6 @@
 
 namespace Imanghafoori\Middlewarize;
 
-use Illuminate\Pipeline\Pipeline;
-
 class Proxy
 {
     private $callable;

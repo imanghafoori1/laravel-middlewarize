@@ -50,6 +50,21 @@ class MiddlewarizeTests extends TestCase
         $this->assertEquals($value, 4);
     }
 
+    public function testItCanCallOtherMethodsAsMiddlewares()
+    {
+        $value = (new MyClass())->middleware([
+            AdderMiddleware::class.'@handle2',
+            AdderMiddleware::class.'@handle2',
+            AdderMiddleware::class,
+        ])->find(1);
+
+        $this->assertEquals($value, 4);
+
+        $r = new MyClass();
+        Cache::shouldReceive('remember')->once()->andReturn('hello');
+        $r->middleware(CacheMiddleware::class.'@handle:foo,6 seconds')->find(1);
+    }
+
     public function testItCanWorkForStaticMethods()
     {
         Cache::shouldReceive('remember')->once()->andReturn('hello');
@@ -118,6 +133,11 @@ class CacheMiddleware
 class AdderMiddleware
 {
     public function handle($data, $next)
+    {
+        return $next($data) + 1;
+    }
+
+    public function handle2($data, $next)
     {
         return $next($data) + 1;
     }
