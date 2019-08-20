@@ -71,6 +71,21 @@ class MiddlewarizeTests extends TestCase
 
         MyClass::middlewared(CacheMiddleware::class.':foo1,6 seconds')->static_find(1);
     }
+
+    public function testItCanWorkForClosures()
+    {
+        Cache::shouldReceive('remember')->once()->andReturn('hello');
+
+        $handle = function ($data, $next) {
+            $ttl = \DateInterval::createFromDateString('6 seconds');
+
+            return Cache::remember('user', $ttl, function () use ($next, $data) {
+                return $next($data);
+            });
+        };
+
+        MyClass::middlewared($handle)->static_find(1);
+    }
 }
 
 class MyClass 
