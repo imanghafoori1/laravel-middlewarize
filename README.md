@@ -1,14 +1,23 @@
+<h1 align="center">
+Laravel Middlewarize
+</h1>
+
+<h2 align="center">
+     :ribbon:
+Decorator your method calls in laravel
+     :ribbon:
+</h2>
 
 
-<h1> Laravel Middlewarize </h1>
-<h2> Decorator your method calls in laravel </h2>
+<p align="center">
+    <img width="300px" src="https://user-images.githubusercontent.com/6961695/63361384-43f97780-c385-11e9-8be2-0318269cd550.png" alt="Onion"></img>
+</p>
 
     
 [![Maintainability](https://api.codeclimate.com/v1/badges/265609ba555d5fd06560/maintainability)](https://codeclimate.com/github/imanghafoori1/laravel-middlewarize/maintainability)
 <a href="https://scrutinizer-ci.com/g/imanghafoori1/laravel-middlewarize"><img src="https://img.shields.io/scrutinizer/g/imanghafoori1/laravel-middlewarize.svg?style=flat-square" alt="Quality Score"></img></a>
 [![Latest Stable Version](https://poser.pugx.org/imanghafoori/laravel-middlewarize/v/stable)](https://packagist.org/packages/imanghafoori/laravel-middlewarize)
 [![Build Status](https://travis-ci.org/imanghafoori1/laravel-middlewarize.svg?branch=master)](https://travis-ci.org/imanghafoori1/laravel-middlewarize)
-[![Monthly Downloads](https://poser.pugx.org/imanghafoori/laravel-middlewarize/d/monthly)](https://packagist.org/packages/imanghafoori/laravel-middlewarize)
 [![Code Coverage](https://scrutinizer-ci.com/g/imanghafoori1/laravel-middlewarize/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/imanghafoori1/laravel-middlewarize/?branch=master)
 [![Software License](https://img.shields.io/badge/license-MIT-blue.svg?style=round-square)](LICENSE.md)
 </p>
@@ -23,11 +32,11 @@ composer require imanghafoori/laravel-middlewarize
 
 You can use middlewares to decorate any method calls on any object.
 
-### Use Cases:
+### How to use:
 
-First of all, You should use the `\Imanghafoori\Middlewarize\Middlewarable` trait on your class.
+Put the `\Imanghafoori\Middlewarize\Middlewarable` trait on your class.
 
-For example consider a repository class:
+For example consider a simple repository class:
 
 ```php
 class UserRepository
@@ -43,12 +52,6 @@ class UserRepository
 
 ```
 
-What would you do ?!
-
-Put cache logic in repo class? No, no. Put it in your call site ? Ugly.
-
-You define a middleware to put code before and after the method you are calling:
-
 ### Define a Middleware
 
 ```php
@@ -58,14 +61,14 @@ class CacheMiddleware
     public function handle($data, $next, $key, $ttl)
     {
         // 1. This part runs before method call
-        if(Cache::has($key)) {
+        if (Cache::has($key)) {
             return Cache::get($key);
         }
         
         $value = $next($data);  // <--- 2. Runs the actual method
         
-        // 3. This part runs after method
-        Cache::put($key, $value, $ttl);
+       
+        Cache::put($key, $value, $ttl);  // <-- 3. This part runs after method
         
         return $value;
     }
@@ -75,27 +78,58 @@ class CacheMiddleware
 Since middlewares are resolved out of the laravel container, you can pass any abstract string as a middleware and bind it on the IOC:
 
 ```php
-
 public function boot()
 {
-    app()->singleton('cacher', CacheMiddleware::class);  // <---- Optional
+    app()->singleton('cacher', CacheMiddleware::class);  // <---- Optional step
 }
-
 ```
 
 ### Use the Middleware:
 
+Cleaned controller will look like this:
 ```php
-
 public function show($id, UserRepository $repo)
 {
-    $cachedUser = $repo->middleware('cacher:fooKey,60')->find($id);
+    $cachedUser = $repo
+        ->middleware('cacher:fooKey,60')
+        ->find($id);
 }
+```
 
+
+#### Before : 
+
+Before our controller code was nasty like this:
+
+```php
+public function show($id, UserRepository $repo)
+{
+    if (Cache::has('user.'.$id)) {
+        return Cache::get('user.'.$id);
+    }
+        
+    $value = $repo->find($id);  //   <--- method call is here.
+
+    Cache::put('user.'.$id, $value, 60);
+        
+    return $value;
+}
 ```
 
 Easy Peasy Yeah ?!
 
+You totally separate the cache concern into a new class.
+
+
+### Overriding default Middleware method:
+```php
+public function show($id, UserRepository $repo)
+{
+    $cachedUser = $repo
+        ->middleware('cacher@MyHandle1:fooKey,60')  // <--- Overrides default "handle" method name
+        ->find($id);
+}
+```
 
 ### Multiple middlewares:
 ```php
@@ -105,12 +139,12 @@ public function show($id, UserRepository $repo)
 }
 ```
 
-The order they execute is like that:
+The order of execution is like that:
 <p align="center">
-   Start ===>   middle1 --> middle2 --> middle3 --->(  find  )---> middle3 --> middle2  --> middle1   ===> result !!!
+   Start ===>  ( middle1 ( middle2 ( middle_3 ( find ) middle_3 ) middle2 ) middle1 )  ===> result !!!
 </p>
 
-### Middlewares on facades:
+### Middlewares on facades ?!
 
 You wanna use facades to call the repo ?!
 ```php
@@ -119,21 +153,25 @@ $cachedUser = UserRepositoryFacade::middleware('cacher:fooKey,60 seconds')->find
 
 ```
 
-#### Objects as middlewares:
+### Objects as middlewares:
 
 You can also use objects as middlewares for more eloborated scenarios.
 ```php
 
-$object = new CacheMiddleware(...);   //   <----- you send depedencies to it.
+$obj = new CacheMiddleware('myCacheKey', etc...);   //   <----- you send depedencies to it.
 
-$repo->middleware($object)->find($id);
+$repo->middleware($obj)->find($id);
 
 ```
 
-#### Middleware on static methods:
+### Middleware on static methods:
 
 ```php
-User::middlewared('...')->find($id); //  <--- you should put 'middlewarable' trait on eloquent model.
+
+User::find($id);       //  <--- Sample static method call
+
+User::middlewared('cache:key,10')->find($id); // <--- Remember you must put 'middlewarable' trait on User model.
+
 ```
 
 ### Testing:
@@ -153,6 +191,7 @@ class NullCacheMiddleware
 public function testSomeThing()
 {
     app()->singleton('cacher', NullCacheMiddleware::class);  // <--- this causes to replace the cache middleware
+    
     $this->get('/home');
 }
 
