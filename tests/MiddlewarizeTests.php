@@ -86,6 +86,17 @@ class MiddlewarizeTests extends TestCase
 
         MyClass::middlewared($handle)->static_find(1);
     }
+
+    public function testItExecutesMiddlewaresInCaseOfException()
+    {
+        Cache::shouldReceive('forget')->once()->with('Oh my God');
+
+        $value = (new MyClass())->middleware([
+            MyMiddleware::class
+        ])->faily(1);
+
+        $this->assertEquals('Oh my God1q2w3e', $value);
+    }
 }
 
 class MyClass 
@@ -100,6 +111,11 @@ class MyClass
     public static function static_find($id)
     {
         return $id;
+    }
+
+    public function faily()
+    {
+        throw new \Exception('Oh my God');
     }
 }
 
@@ -155,5 +171,16 @@ class AdderMiddleware
     public function handle2($data, $next)
     {
         return $next($data) + 1;
+    }
+}
+
+class MyMiddleware
+{
+    public function handle($data, $next)
+    {
+        $resp = $next($data);
+        Cache::forget($resp->getMessage());
+
+        return $resp->getMessage(). '1q2w3e';
     }
 }
