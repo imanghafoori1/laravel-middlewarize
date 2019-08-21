@@ -2,8 +2,6 @@
 
 namespace Imanghafoori\Middlewarize;
 
-use Illuminate\Contracts\Support\Responsable;
-use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline as CorePipe;
 
 class Pipeline extends CorePipe

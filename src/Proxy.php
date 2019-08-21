@@ -23,10 +23,14 @@ class Proxy
     public function __call($method, $params)
     {
         $pipeline = new Pipeline(app());
-        
+
         if (!is_string($this->callable)) {
             $core = (function ($params) use ($method) {
-                return $this->$method(...$params);
+                try {
+                    return $this->$method(...$params);
+                } catch (\Throwable $e) {
+                    return $e;
+                }
             })->bindTo($this->callable, $this->callable);
         } else {
             $core = function ($params) use ($method) {
@@ -34,10 +38,16 @@ class Proxy
             };
         }
 
-        return $pipeline
+        $result = $pipeline
             ->via('handle')
             ->send($params)
             ->through($this->middlewares)
             ->then($core);
+
+        if ($result instanceof \Throwable) {
+            throw $result;
+        } else {
+            return $result;
+        }
     }
 }
