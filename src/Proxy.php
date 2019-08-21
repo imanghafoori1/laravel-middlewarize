@@ -25,6 +25,7 @@ class Proxy
         $pipeline = new Pipeline(app());
 
         if (!is_string($this->callable)) {
+            // for method calls on objects.
             $core = (function ($params) use ($method) {
                 try {
                     return $this->$method(...$params);
@@ -33,16 +34,30 @@ class Proxy
                 }
             })->bindTo($this->callable, $this->callable);
         } else {
+            // for static method calls on classes.
             $core = function ($params) use ($method) {
-                return call_user_func_array([$this->callable, $method], $params);
+                try {
+                    return call_user_func_array([$this->callable, $method], $params);
+                } catch (\Throwable $e) {
+                    return $e;
+                }
             };
         }
 
-        $result = $pipeline
-            ->via('handle')
-            ->send($params)
-            ->through($this->middlewares)
-            ->then($core);
+        return $this->sendItThroughPipes($params, $pipeline, $core);
+    }
+
+    /**
+     * @param $params
+     * @param Pipeline $pipeline
+     * @param \Closure $core
+     *
+     * @throws \Throwable
+     * @return mixed
+     */
+    private function sendItThroughPipes($params, Pipeline $pipeline, \Closure $core)
+    {
+        $result = $pipeline->via('handle')->send($params)->through($this->middlewares)->then($core);
 
         if ($result instanceof \Throwable) {
             throw $result;
