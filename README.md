@@ -4,7 +4,7 @@ Laravel Middlewarize
 
 <h2 align="center">
      :ribbon:
-Decorator your method calls in laravel
+Extract extra fluffy code into middlewares
      :ribbon:
 </h2>
 
@@ -43,7 +43,7 @@ class UserRepository
 {
     use Middlewarable;  //    <----   Put middleware on class
     
-    public function find ($id) 
+    public function find($id) 
     {
         return User::find($id);   //    <----  we wanna cache it, right ?
     }
@@ -105,12 +105,12 @@ Before our controller code was nasty like this:
 public function show($id, UserRepository $repo)
 {
     if (Cache::has('user.'.$id)) {
-        return Cache::get('user.'.$id);
+        return Cache::get('user.'.$id); // <--- extra fluff around ->find($id)
     }
         
-    $value = $repo->find($id);  //   <--- method call is here.
+    $value = $repo->find($id);  //   <--- important method call here.
 
-    Cache::put('user.'.$id, $value, 60);
+    Cache::put('user.'.$id, $value, 60); // <--- extra fluff around ->find($id)
         
     return $value;
 }
@@ -141,24 +141,21 @@ public function show($id, UserRepository $repo)
 
 The order of execution is like that:
 <p align="center">
-   Start ===>  ( middle1 ( middle2 ( middle_3 ( find ) middle_3 ) middle2 ) middle1 )  ===> result !!!
+   Start ===>  ( middle1 ( middle2 ( middle_3 (  <b> find </b> ) middle_3 ) middle2 ) middle1 )  ===> result !!!
 </p>
 
 ### Middlewares on facades ?!
 
-You wanna use facades to call the repo ?!
+You wanna use facades to call the repo ?! No problem.
 ```php
-
 $cachedUser = UserRepositoryFacade::middleware('cacher:fooKey,60 seconds')->find($id);
-
 ```
 
 ### Objects as middlewares:
 
 You can also use objects as middlewares for more eloborated scenarios.
 ```php
-
-$obj = new CacheMiddleware('myCacheKey', etc...);   //   <----- you send depedencies to it.
+$obj = new CacheMiddleware('myCacheKey', etc...);   //   <---- you send depedencies to it.
 
 $repo->middleware($obj)->find($id);
 
@@ -167,11 +164,11 @@ $repo->middleware($obj)->find($id);
 ### Middleware on static methods:
 
 ```php
-
 User::find($id);       //  <--- Sample static method call
 
-User::middlewared('cache:key,10')->find($id); // <--- Remember you must put 'middlewarable' trait on User model.
+User::middlewared('cache:key,10')->find($id); // <--- you can have a decorated call
 
+// also you must put 'middlewarable' trait on User model.
 ```
 
 ### Testing:
