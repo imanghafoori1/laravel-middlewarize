@@ -41,18 +41,18 @@ For example consider a simple repository class:
 ```php
 class UserRepository
 {
-    use Middlewarable;  //    <----   Put middleware on class
+    use Middlewarable;     //   <----  Put middleware on class
     
     public function find($id) 
     {
-        return User::find($id);   //    <----  we wanna cache it, right ?
+        return User::find($id);   //   <----  we wanna cache it, right ?
     }
     ...
 }
 
 ```
 
-### Define a Middleware
+### Define a Middleware:
 
 ```php
 
@@ -95,11 +95,15 @@ public function show($id, UserRepository $repo)
         ->find($id);
 }
 ```
+Easy Peasy Yeah ?!
 
+You totally separate the cache concern into a new class.
 
-#### Before : 
+So let's compare...
 
-Before our controller code was nasty like this:
+#### Before: 
+
+Before utilizing middlewares our code was like this:
 
 ```php
 public function show($id, UserRepository $repo)
@@ -115,11 +119,6 @@ public function show($id, UserRepository $repo)
     return $value;
 }
 ```
-
-Easy Peasy Yeah ?!
-
-You totally separate the cache concern into a new class.
-
 
 ### Overriding default Middleware method:
 ```php
@@ -141,7 +140,7 @@ public function show($id, UserRepository $repo)
 
 The order of execution is like that:
 <p align="center">
-   Start ===>  ( middle1 ( middle2 ( middle_3 (  <b> find </b> ) middle_3 ) middle2 ) middle1 )  ===> result !!!
+   Start ===>  ( middle1 -> middle2 -> middle_3 (  <b> find </b> ) middle_3 -> middle2 -> middle1 )  ===> result !!!
 </p>
 
 ### Middlewares on facades ?!
@@ -152,7 +151,6 @@ $cachedUser = UserRepositoryFacade::middleware('cacher:fooKey,60 seconds')->find
 ```
 
 ### Objects as middlewares:
-
 You can also use objects as middlewares for more eloborated scenarios.
 ```php
 $obj = new CacheMiddleware('myCacheKey', etc...);   //   <---- you send depedencies to it.
@@ -162,7 +160,6 @@ $repo->middleware($obj)->find($id);
 ```
 
 ### Middleware on static methods:
-
 ```php
 User::find($id);       //  <--- Sample static method call
 
@@ -195,6 +192,13 @@ public function testSomeThing()
 ```
 
 Here we have neutralized the middleware to do "nothing" while the tests are running.
+
+
+### What happens if exception is thrown from your method?
+
+It is important to know if you throw an exception in your method, the post middlewares still execute and the value of `$value = $next(data)` would be the thrown exception.
+The exception is rethrown when all middlewares finished executing.
+
 
 --------------------
 
