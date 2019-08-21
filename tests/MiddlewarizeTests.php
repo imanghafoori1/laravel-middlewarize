@@ -108,6 +108,16 @@ class MiddlewarizeTests extends TestCase
 
         $this->assertEquals('Oh my God1q2w3e', $value);
     }
+
+    public function testExceptionisRethrown()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Oh my God');
+
+        MyClass::middlewared(function($data, $next) {
+            return $next($data);
+        })->static_faily(1);
+    }
 }
 
 class MyClass 
