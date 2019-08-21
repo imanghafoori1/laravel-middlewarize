@@ -97,6 +97,17 @@ class MiddlewarizeTests extends TestCase
 
         $this->assertEquals('Oh my God1q2w3e', $value);
     }
+
+    public function testItExecutesMiddlewaresInCaseOfStaticException()
+    {
+        Cache::shouldReceive('forget')->once()->with('Oh my God');
+
+        $value = MyClass::middlewared([
+            MyMiddleware::class
+        ])->static_faily(1);
+
+        $this->assertEquals('Oh my God1q2w3e', $value);
+    }
 }
 
 class MyClass 
@@ -114,6 +125,11 @@ class MyClass
     }
 
     public function faily()
+    {
+        throw new \Exception('Oh my God');
+    }
+
+    public static function static_faily()
     {
         throw new \Exception('Oh my God');
     }
