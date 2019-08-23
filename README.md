@@ -10,7 +10,7 @@ Extract extra fluffy code into middlewares
 
 
 <p align="center">
-    <img width="300px" src="https://user-images.githubusercontent.com/6961695/63361384-43f97780-c385-11e9-8be2-0318269cd550.png" alt="Onion"></img>
+    <img width="300px" src="https://user-images.githubusercontent.com/6961695/63593162-a2fafe80-c5c8-11e9-8aba-f9f6aa298c25.png" alt="Onion"></img>
 </p>
 
     
