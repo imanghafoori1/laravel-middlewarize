@@ -45,5 +45,4 @@ class Pipeline extends CorePipe
             };
         };
     }
-
 }

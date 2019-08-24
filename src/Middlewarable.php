@@ -14,7 +14,7 @@ trait Middlewarable
         return new Proxy($this, $middleware);
     }
 
-    static function middlewared($middlwares)
+    public static function middlewared($middlwares)
     {
         return new Proxy(self::class, $middlwares);
     }
