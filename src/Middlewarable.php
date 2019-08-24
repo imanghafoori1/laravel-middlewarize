@@ -4,6 +4,11 @@ namespace Imanghafoori\Middlewarize;
 
 trait Middlewarable
 {
+    /**
+     * @param array|string|callable $middleware
+     *
+     * @return $this
+     */
     public function middleware($middleware)
     {
         return new Proxy($this, $middleware);
