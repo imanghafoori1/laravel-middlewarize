@@ -48,6 +48,19 @@ class MiddlewarizeTests extends TestCase
         ])->find(1);
 
         $this->assertEquals($value, 4);
+
+        $value = (new MyClass())->middleware([
+            [new AdderMiddleware, 'handle2'],
+            [new AdderMiddleware, 'handle'],
+            [AdderMiddleware::class, 'handle3'],
+        ])->find(1);
+
+        $this->assertEquals($value, 4);
+
+        $value = (new MyClass())->middleware(
+            [AdderMiddleware::class, 'handle3']
+        )->find(1);
+        $this->assertEquals($value, 2);
     }
 
     public function testItCanCallOtherMethodsAsMiddlewares()
@@ -197,6 +210,13 @@ class AdderMiddleware
     public function handle2($data, $next)
     {
         return $next($data) + 1;
+    }
+
+    public static function handle3($data, $next)
+    {
+            $var = $next($data) + 1;
+        dump($var);
+        return $var;
     }
 }
 

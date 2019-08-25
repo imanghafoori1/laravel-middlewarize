@@ -7,6 +7,20 @@ use Illuminate\Pipeline\Pipeline as CorePipe;
 class Pipeline extends CorePipe
 {
     /**
+     * Set the array of pipes.
+     *
+     * @param  callable|array|string  $pipes
+     * @return \Illuminate\Pipeline\Pipeline
+     */
+    public function through($pipes)
+    {
+        $pipes = is_callable($pipes) ? [$pipes] : $pipes;
+        $this->pipes = is_array($pipes) ? $pipes : func_get_args();
+
+        return $this;
+    }
+
+    /**
      * Get a Closure that represents a slice of the application onion.
      *
      * @return \Closure
