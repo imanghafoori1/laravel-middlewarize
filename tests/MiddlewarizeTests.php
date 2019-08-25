@@ -214,9 +214,7 @@ class AdderMiddleware
 
     public static function handle3($data, $next)
     {
-            $var = $next($data) + 1;
-        dump($var);
-        return $var;
+        return $next($data) + 1;
     }
 }
 
