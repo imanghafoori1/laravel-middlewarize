@@ -14,14 +14,16 @@ Extract extra fluffy code into middlewares
 </p>
 
     
-[![Maintainability](https://api.codeclimate.com/v1/badges/265609ba555d5fd06560/maintainability)](https://codeclimate.com/github/imanghafoori1/laravel-middlewarize/maintainability)
-<a href="https://scrutinizer-ci.com/g/imanghafoori1/laravel-middlewarize"><img src="https://img.shields.io/scrutinizer/g/imanghafoori1/laravel-middlewarize.svg?style=flat-square" alt="Quality Score"></img></a>
-[![Latest Stable Version](https://poser.pugx.org/imanghafoori/laravel-middlewarize/v/stable)](https://packagist.org/packages/imanghafoori/laravel-middlewarize)
-[![Build Status](https://travis-ci.org/imanghafoori1/laravel-middlewarize.svg?branch=master)](https://travis-ci.org/imanghafoori1/laravel-middlewarize)
-[![Code Coverage](https://scrutinizer-ci.com/g/imanghafoori1/laravel-middlewarize/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/imanghafoori1/laravel-middlewarize/?branch=master)
-[![Software License](https://img.shields.io/badge/license-MIT-blue.svg?style=round-square)](LICENSE.md)
+<p align="center">
+     <a href="https://codeclimate.com/github/imanghafoori1/laravel-middlewarize/maintainability" rel="nofollow"><img src="https://camo.githubusercontent.com/34325fdf9d3023091efe12af83ae146164e43623/68747470733a2f2f6170692e636f6465636c696d6174652e636f6d2f76312f6261646765732f32363536303962613535356435666430363536302f6d61696e7461696e6162696c697479" alt="Maintainability" data-canonical-src="https://api.codeclimate.com/v1/badges/265609ba555d5fd06560/maintainability" style="max-width:100%;"></a>
+<a href="https://scrutinizer-ci.com/g/imanghafoori1/laravel-middlewarize" rel="nofollow"><img src="https://camo.githubusercontent.com/359ea3abaa25e5294e7f040d56e4c3b621fd1270/68747470733a2f2f696d672e736869656c64732e696f2f7363727574696e697a65722f672f696d616e676861666f6f7269312f6c61726176656c2d6d6964646c65776172697a652e7376673f7374796c653d666c61742d737175617265" alt="Quality Score" data-canonical-src="https://img.shields.io/scrutinizer/g/imanghafoori1/laravel-middlewarize.svg?style=flat-square" style="max-width:100%;"></a>
+<a href="https://packagist.org/packages/imanghafoori/laravel-middlewarize" rel="nofollow"><img src="https://camo.githubusercontent.com/6d0dcff30fd48713efa4bebdbef64d7b15f76250/68747470733a2f2f706f7365722e707567782e6f72672f696d616e676861666f6f72692f6c61726176656c2d6d6964646c65776172697a652f762f737461626c65" alt="Latest Stable Version" data-canonical-src="https://poser.pugx.org/imanghafoori/laravel-middlewarize/v/stable" style="max-width:100%;"></a>
+<a href="https://travis-ci.org/imanghafoori1/laravel-middlewarize" rel="nofollow"><img src="https://camo.githubusercontent.com/318d1303563293c674a9521c837baa4f33bd63cf/68747470733a2f2f7472617669732d63692e6f72672f696d616e676861666f6f7269312f6c61726176656c2d6d6964646c65776172697a652e7376673f6272616e63683d6d6173746572" alt="Build Status" data-canonical-src="https://travis-ci.org/imanghafoori1/laravel-middlewarize.svg?branch=master" style="max-width:100%;"></a>
+<a href="https://scrutinizer-ci.com/g/imanghafoori1/laravel-middlewarize/?branch=master" rel="nofollow"><img src="https://camo.githubusercontent.com/ea575cf7a29f4a678075253cddc49e02d118c87d/68747470733a2f2f7363727574696e697a65722d63692e636f6d2f672f696d616e676861666f6f7269312f6c61726176656c2d6d6964646c65776172697a652f6261646765732f636f7665726167652e706e673f623d6d6173746572" alt="Code Coverage" data-canonical-src="https://scrutinizer-ci.com/g/imanghafoori1/laravel-middlewarize/badges/coverage.png?b=master" style="max-width:100%;"></a>
+<a href="/imanghafoori1/laravel-middlewarize/blob/master/LICENSE.md"><img src="https://camo.githubusercontent.com/d885b3999bb863974fb67118174bb0402d089a89/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c6963656e73652d4d49542d626c75652e7376673f7374796c653d726f756e642d737175617265" alt="Software License" data-canonical-src="https://img.shields.io/badge/license-MIT-blue.svg?style=round-square" style="max-width:100%;"></a>
 </p>
 
+---------------
 
 
 ### Installation: 
@@ -206,6 +208,7 @@ The exception is rethrown when all middlewares finished executing.
 
 If you find an issue, or have a better way to do something, feel free to open an issue or a pull request.
 
+--------------------
 
 ### :star: Your Stars Make Us Do More :star:
 
