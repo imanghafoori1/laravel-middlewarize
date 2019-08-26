@@ -2,6 +2,7 @@
 
 namespace Imanghafoori\MiddlewarizeTests;
 
+use InvalidArgumentException;
 use Illuminate\Support\Facades\Cache;
 use Imanghafoori\Middlewarize\Middlewarable;
 
@@ -28,7 +29,7 @@ class MiddlewarizeTests extends TestCase
     public function testItWillCallTheActualStaticMethod()
     {
         $value = MyClass::middlewared(CacheMiddleware::class.':foo2,0 seconds')->static_find(1);
-         
+
         $this->assertEquals($value, 1);
     }
 
@@ -122,7 +123,7 @@ class MiddlewarizeTests extends TestCase
         $this->assertEquals('Oh my God1q2w3e', $value);
     }
 
-    public function testExceptionisRethrown()
+    public function testExceptionIsRethrown()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Oh my God');
@@ -130,6 +131,16 @@ class MiddlewarizeTests extends TestCase
         MyClass::middlewared(function($data, $next) {
             return $next($data);
         })->static_faily(1);
+    }
+
+    public function testItThrowsInvalidArgumentExceptionWhenPipeIsOfSillyTypes2()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('A pipe must be an object, a string or a callable. array given');
+
+        $value = MyClass::middlewared([[]])->static_find(1);
+
+        $this->assertEquals($value, 1);
     }
 }
 
