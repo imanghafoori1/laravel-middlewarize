@@ -4,7 +4,7 @@ Laravel Middlewarize
 
 <h2 align="center">
      :ribbon:
-Extract extra fluffy code into middlewares
+"Chain of Responsibility" Design Pattern In Your Laravel Apps
      :ribbon:
 </h2>
 
