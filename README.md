@@ -34,7 +34,7 @@ composer require imanghafoori/laravel-middlewarize
 ```
 
 
-### How to use:
+#### :arrow_forward: How to use:
 
 Put the `\Imanghafoori\Middlewarize\Middlewarable` trait on your class.
 
@@ -54,7 +54,7 @@ class UserRepository
 
 ```
 
-### Define a Middleware:
+#### :arrow_forward: Define a Middleware:
 
 ```php
 
@@ -86,7 +86,7 @@ public function boot()
 }
 ```
 
-### Use the Middleware:
+#### :arrow_forward: Use the Middleware:
 
 Cleaned controller will look like this:
 ```php
@@ -122,7 +122,7 @@ public function show($id, UserRepository $repo)
 }
 ```
 
-### Overriding default Middleware method:
+#### :arrow_forward: Overriding default Middleware method:
 ```php
 public function show($id, UserRepository $repo)
 {
@@ -132,7 +132,7 @@ public function show($id, UserRepository $repo)
 }
 ```
 
-### Multiple middlewares:
+#### :arrow_forward: Multiple middlewares:
 ```php
 public function show($id, UserRepository $repo)
 {
@@ -145,14 +145,14 @@ The order of execution is like that:
    Start ===>  ( middle1 -> middle2 -> middle_3 (  <b> find </b> ) middle_3 -> middle2 -> middle1 )  ===> result !!!
 </p>
 
-### Middlewares on facades ?!
+#### :arrow_forward: Middlewares on facades ?!
 
 You wanna use facades to call the repo ?! No problem.
 ```php
 $cachedUser = UserRepositoryFacade::middleware('cacher:fooKey,60 seconds')->find($id);
 ```
 
-### Objects as middlewares:
+#### :arrow_forward: Objects as middlewares:
 You can also use objects as middlewares for more eloborated scenarios.
 ```php
 $obj = new CacheMiddleware('myCacheKey', etc...);   //   <---- you send depedencies to it.
@@ -161,7 +161,7 @@ $repo->middleware($obj)->find($id);
 
 ```
 
-### Middleware on static methods:
+#### :arrow_forward: Middleware on static methods:
 ```php
 User::find($id);       //  <--- Sample static method call
 
@@ -170,7 +170,7 @@ User::middlewared('cache:key,10')->find($id); // <--- you can have a decorated c
 // also you must put 'middlewarable' trait on User model.
 ```
 
-### Testing:
+#### :arrow_forward: Testing:
 As we mentioned before middlewares are resolved out of the IOC, and that means you can easily swap them out while running your tests.
 
 ```php
@@ -196,7 +196,7 @@ public function testSomeThing()
 Here we have neutralized the middleware to do "nothing" while the tests are running.
 
 
-### What happens if exception is thrown from your method?
+#### :arrow_forward: What happens if exception is thrown from your method?
 
 It is important to know if you throw an exception in your method, the post middlewares still execute and the value of `$value = $next(data)` would be the thrown exception.
 The exception is rethrown when all middlewares finished executing.
