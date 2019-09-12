@@ -4,7 +4,7 @@ Laravel Middlewarize
 
 <h2 align="center">
      :ribbon:
-"Chain of Responsibility" Design Pattern In Your Laravel Apps
+Chain of Responsibility Design Pattern In Laravel Apps
      :ribbon:
 </h2>
 
@@ -25,14 +25,15 @@ Laravel Middlewarize
 
 ---------------
 
+**You can use middlewares to decorate any method calls on any object.**
 
-### Installation: 
+
+### :fire: Installation: 
 
 ```
 composer require imanghafoori/laravel-middlewarize
 ```
 
-You can use middlewares to decorate any method calls on any object.
 
 ### How to use:
 
