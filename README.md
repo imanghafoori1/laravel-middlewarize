@@ -7,12 +7,11 @@ Laravel Middlewarize
 Chain of Responsibility Design Pattern In Laravel Apps
      :ribbon:
 </h2>
-
+<br>
 
 <p align="center">
     <img width="300px" src="https://user-images.githubusercontent.com/6961695/63593162-a2fafe80-c5c8-11e9-8aba-f9f6aa298c25.png" alt="Onion"></img>
 </p>
-
     
 <p align="center">
      <a href="https://codeclimate.com/github/imanghafoori1/laravel-middlewarize/maintainability" rel="nofollow"><img src="https://camo.githubusercontent.com/34325fdf9d3023091efe12af83ae146164e43623/68747470733a2f2f6170692e636f6465636c696d6174652e636f6d2f76312f6261646765732f32363536303962613535356435666430363536302f6d61696e7461696e6162696c697479" alt="Maintainability" data-canonical-src="https://api.codeclimate.com/v1/badges/265609ba555d5fd06560/maintainability" style="max-width:100%;"></a>
