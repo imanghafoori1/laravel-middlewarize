@@ -128,7 +128,7 @@ class MiddlewarizeTests extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Oh my God');
 
-        MyClass::middlewared(function($data, $next) {
+        MyClass::middlewared(function ($data, $next) {
             return $next($data);
         })->static_faily(1);
     }
@@ -144,7 +144,7 @@ class MiddlewarizeTests extends TestCase
     }
 }
 
-class MyClass 
+class MyClass
 {
     use Middlewarable;
 
