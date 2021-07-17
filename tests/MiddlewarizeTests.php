@@ -1,6 +1,6 @@
 <?php
 
-namespace Imanghafoori\MiddlewarizeTests;
+namespace Imanghafoori\Middlewarize\Tests;
 
 use InvalidArgumentException;
 use Illuminate\Support\Facades\Cache;
