@@ -1,7 +1,12 @@
 <?php
 
-namespace Imanghafoori\MiddlewarizeTests;
+namespace Imanghafoori\Middlewarize\Tests;
 
+use Imanghafoori\Middlewarize\Tests\helpers\Middlewares\AdderMiddleware;
+use Imanghafoori\Middlewarize\Tests\helpers\Middlewares\CacheMiddleware;
+use Imanghafoori\Middlewarize\Tests\helpers\Middlewares\CacheMiddleware2;
+use Imanghafoori\Middlewarize\Tests\helpers\Middlewares\MyMiddleware;
+use Imanghafoori\Middlewarize\Tests\helpers\MockClass;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\Cache;
 use Imanghafoori\Middlewarize\Middlewarable;
@@ -10,7 +15,7 @@ class MiddlewarizeTests extends TestCase
 {
     public function testHello()
     {
-        $r = new MyClass();
+        $r = new MockClass();
         Cache::shouldReceive('remember')->once()->andReturn('hello');
         $r->middleware(CacheMiddleware::class.':foo,6 seconds')->find(1);
     }
@@ -23,26 +28,26 @@ class MiddlewarizeTests extends TestCase
             return 'foo';
         }, '1 second');
 
-        (new MyClass())->middleware($cacher)->find(1);
+        (new MockClass())->middleware($cacher)->find(1);
     }
 
     public function testItWillCallTheActualStaticMethod()
     {
-        $value = MyClass::middlewared(CacheMiddleware::class.':foo2,0 seconds')->static_find(1);
+        $value = MockClass::middlewared(CacheMiddleware::class.':foo2,0 seconds')->static_find(1);
 
         $this->assertEquals($value, 1);
     }
 
     public function testItWillCallTheActualMethod()
     {
-        $value = (new MyClass())->middleware(CacheMiddleware::class.':foo2,0 seconds')->find(1);
+        $value = (new MockClass())->middleware(CacheMiddleware::class.':foo2,0 seconds')->find(1);
 
         $this->assertEquals($value, 1);
     }
 
     public function testItCanHaveMultipleMiddlewares()
     {
-        $value = (new MyClass())->middleware([
+        $value = (new MockClass())->middleware([
             AdderMiddleware::class,
             AdderMiddleware::class,
             AdderMiddleware::class,
@@ -50,7 +55,7 @@ class MiddlewarizeTests extends TestCase
 
         $this->assertEquals($value, 4);
 
-        $value = (new MyClass())->middleware([
+        $value = (new MockClass())->middleware([
             [new AdderMiddleware, 'handle2'],
             [new AdderMiddleware, 'handle'],
             [AdderMiddleware::class, 'handle3'],
@@ -58,7 +63,7 @@ class MiddlewarizeTests extends TestCase
 
         $this->assertEquals($value, 4);
 
-        $value = (new MyClass())->middleware(
+        $value = (new MockClass())->middleware(
             [AdderMiddleware::class, 'handle3']
         )->find(1);
         $this->assertEquals($value, 2);
@@ -66,7 +71,7 @@ class MiddlewarizeTests extends TestCase
 
     public function testItCanCallOtherMethodsAsMiddlewares()
     {
-        $value = (new MyClass())->middleware([
+        $value = (new MockClass())->middleware([
             AdderMiddleware::class.'@handle2',
             AdderMiddleware::class.'@handle2',
             AdderMiddleware::class,
@@ -74,7 +79,7 @@ class MiddlewarizeTests extends TestCase
 
         $this->assertEquals($value, 4);
 
-        $r = new MyClass();
+        $r = new MockClass();
         Cache::shouldReceive('remember')->once()->andReturn('hello');
         $r->middleware(CacheMiddleware::class.'@handle:foo,6 seconds')->find(1);
     }
@@ -83,7 +88,7 @@ class MiddlewarizeTests extends TestCase
     {
         Cache::shouldReceive('remember')->once()->andReturn('hello');
 
-        MyClass::middlewared(CacheMiddleware::class.':foo1,6 seconds')->static_find(1);
+        MockClass::middlewared(CacheMiddleware::class.':foo1,6 seconds')->static_find(1);
     }
 
     public function testItCanWorkForClosures()
@@ -98,14 +103,14 @@ class MiddlewarizeTests extends TestCase
             });
         };
 
-        MyClass::middlewared($handle)->static_find(1);
+        MockClass::middlewared($handle)->static_find(1);
     }
 
     public function testItExecutesMiddlewaresInCaseOfException()
     {
         Cache::shouldReceive('forget')->once()->with('Oh my God');
 
-        $value = (new MyClass())->middleware([
+        $value = (new MockClass())->middleware([
             MyMiddleware::class
         ])->faily(1);
 
@@ -116,7 +121,7 @@ class MiddlewarizeTests extends TestCase
     {
         Cache::shouldReceive('forget')->once()->with('Oh my God');
 
-        $value = MyClass::middlewared([
+        $value = MockClass::middlewared([
             MyMiddleware::class
         ])->static_faily(1);
 
@@ -128,7 +133,7 @@ class MiddlewarizeTests extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Oh my God');
 
-        MyClass::middlewared(function($data, $next) {
+        MockClass::middlewared(function ($data, $next) {
             return $next($data);
         })->static_faily(1);
     }
@@ -138,104 +143,8 @@ class MiddlewarizeTests extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('A pipe must be an object, a string or a callable. array given');
 
-        $value = MyClass::middlewared([[]])->static_find(1);
+        $value = MockClass::middlewared([[]])->static_find(1);
 
         $this->assertEquals($value, 1);
-    }
-}
-
-class MyClass 
-{
-    use Middlewarable;
-
-    public function find($id)
-    {
-        return $id;
-    }
-
-    public static function static_find($id)
-    {
-        return $id;
-    }
-
-    public function faily()
-    {
-        throw new \Exception('Oh my God');
-    }
-
-    public static function static_faily()
-    {
-        throw new \Exception('Oh my God');
-    }
-}
-
-class CacheMiddleware2
-{
-    private $keyMaker;
-
-    private $ttl;
-
-    /**
-     * CacheMiddleware2 constructor.
-     *
-     * @param $keyMaker
-     * @param $ttl
-     */
-    public function __construct($keyMaker, $ttl)
-    {
-        $this->keyMaker = $keyMaker;
-
-        $this->ttl = $ttl;
-    }
-
-    public function handle($data, $next)
-    {
-        $ttl = \DateInterval::createFromDateString($this->ttl);
-
-        $t = $this->keyMaker;
-
-        return Cache::remember($t($data), $ttl, function () use ($next, $data) {
-            return $next($data);
-        });
-    }
-}
-
-class CacheMiddleware
-{
-    public function handle($data, $next, $key, $ttl)
-    {
-        $ttl = \DateInterval::createFromDateString($ttl);
-        return Cache::remember($key, $ttl, function () use ($next, $data) {
-            return $next($data);
-        });
-    }
-}
-
-class AdderMiddleware
-{
-    public function handle($data, $next)
-    {
-        return $next($data) + 1;
-    }
-
-    public function handle2($data, $next)
-    {
-        return $next($data) + 1;
-    }
-
-    public static function handle3($data, $next)
-    {
-        return $next($data) + 1;
-    }
-}
-
-class MyMiddleware
-{
-    public function handle($data, $next)
-    {
-        $resp = $next($data);
-        Cache::forget($resp->getMessage());
-
-        return $resp->getMessage(). '1q2w3e';
     }
 }
