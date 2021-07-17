@@ -3,7 +3,6 @@
 
 namespace Imanghafoori\Middlewarize\Tests\helpers\Middlewares;
 
-
 use Illuminate\Support\Facades\Cache;
 
 class MyMiddleware

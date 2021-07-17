@@ -2,7 +2,10 @@
 
 namespace Imanghafoori\Middlewarize\Tests;
 
-use Imanghafoori\Middlewarize\Tests\helpers\Middlewares\{AdderMiddleware,CacheMiddleware,CacheMiddleware2,MyMiddleware};
+use Imanghafoori\Middlewarize\Tests\helpers\Middlewares\AdderMiddleware;
+use Imanghafoori\Middlewarize\Tests\helpers\Middlewares\CacheMiddleware;
+use Imanghafoori\Middlewarize\Tests\helpers\Middlewares\CacheMiddleware2;
+use Imanghafoori\Middlewarize\Tests\helpers\Middlewares\MyMiddleware;
 use Imanghafoori\Middlewarize\Tests\helpers\MockClass;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\Cache;

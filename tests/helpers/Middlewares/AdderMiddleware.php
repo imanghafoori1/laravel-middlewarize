@@ -3,7 +3,6 @@
 
 namespace Imanghafoori\Middlewarize\Tests\helpers\Middlewares;
 
-
 class AdderMiddleware
 {
     public function handle($data, $next)

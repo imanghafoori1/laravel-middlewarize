@@ -3,7 +3,6 @@
 
 namespace Imanghafoori\Middlewarize\Tests\helpers;
 
-
 use Imanghafoori\Middlewarize\Middlewarable;
 
 class MockClass
