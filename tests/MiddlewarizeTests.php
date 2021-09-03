@@ -9,7 +9,6 @@ use Imanghafoori\Middlewarize\Tests\helpers\Middlewares\MyMiddleware;
 use Imanghafoori\Middlewarize\Tests\helpers\MockClass;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\Cache;
-use Imanghafoori\Middlewarize\Middlewarable;
 
 class MiddlewarizeTests extends TestCase
 {

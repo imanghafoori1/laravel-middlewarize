@@ -1,7 +1,7 @@
 {
     "name": "imanghafoori/laravel-middlewarize",
     "description": "Use laravel middlewares on any method calls in your app",
-    "keywords": ["laravel", "laravel-middlewares", "laravel5-package", "PHP", "laravel5"],
+    "keywords": ["laravel", "laravel-middlewares", "laravel5-package", "PHP", "laravel5", "pipeline"],
     "license": "MIT",
     "homepage": "https://github.com/imanghafoori1/laravel-middlewarize",
     "authors": [

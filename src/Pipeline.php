@@ -62,4 +62,15 @@ class Pipeline extends CorePipe
             };
         };
     }
+
+    public function sendItThroughPipes($params, \Closure $core, $middlewares)
+    {
+        $result = $this->via('handle')->send($params)->through($middlewares)->then($core);
+
+        if ($result instanceof \Throwable) {
+            throw $result;
+        } else {
+            return $result;
+        }
+    }
 }
