@@ -12,6 +12,7 @@
     ],
     "require": {
         "php": "7.3.*|7.4.*|^8.0",
+        "illuminate/container":"~5.1|6.*|7.*|8.*",
         "illuminate/pipeline":"~5.1|6.*|7.*|8.*"
     },
     "require-dev": {
@@ -30,7 +31,6 @@
     "suggest": {
         "imanghafoori/laravel-heyman": "It allows to write expressive code to authorize, validate and authenticate.",
         "imanghafoori/laravel-decorator": "Allows you to easily apply the decorator pattern.",
-        "imanghafoori/laravel-terminator": "Gives you opportunity to refactor your controllers.",
         "imanghafoori/laravel-anypass": " Allows you login with any password in local environment.",
         "imanghafoori/laravel-masterpass": "You can easily set a master password without code change."
     }

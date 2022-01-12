@@ -2,6 +2,8 @@
 
 namespace Imanghafoori\Middlewarize;
 
+use Illuminate\Container\Container;
+
 trait Middlewarable
 {
     /**
@@ -11,40 +13,12 @@ trait Middlewarable
      */
     public function middleware($middleware)
     {
-        return $this->getProxy($this, $middleware);
+        return self::getStaticProxy($this, $middleware);
     }
 
-    public static function middlewared($middlwares)
+    public static function middlewared($middlware)
     {
-        return self::getStaticProxy(self::class, $middlwares);
-    }
-
-    private static function getProxy($class, $middleware)
-    {
-        return new class ($class, $middleware)
-        {
-            public function __construct($callable, $middlewares)
-            {
-                $this->callable = $callable;
-                $this->middlewares = $middlewares;
-            }
-
-            public function __call($method, $params)
-            {
-                $pipeline = new Pipeline(app());
-
-                // for static method calls on classes.
-                $core = function ($params) use ($method) {
-                    try {
-                        return call_user_func_array([$this->callable, $method], $params);
-                    } catch (\Throwable $e) {
-                        return $e;
-                    }
-                };
-
-                return $pipeline->sendItThroughPipes($params, $core, $this->middlewares);
-            }
-        };
+        return self::getStaticProxy(self::class, $middlware);
     }
 
     private static function getStaticProxy($class, $middleware)
@@ -59,7 +33,7 @@ trait Middlewarable
 
             public function __call($method, $params)
             {
-                $pipeline = new Pipeline(app());
+                $pipeline = new Pipeline(Container::getInstance());
 
                 // for static method calls on classes.
                 $core = function ($params) use ($method) {
