@@ -25,6 +25,17 @@ Chain of Responsibility Design Pattern In Laravel Apps
 
 **You can use middlewares to decorate any method calls on any object.**
 
+```php
+
+// Normal Call:
+$myObj->myMethod();
+
+// Decorated Call:
+$myObj
+    ->middlewares([...])
+    ->myMethod():
+```
+
 
 ### :fire: Installation: 
 
