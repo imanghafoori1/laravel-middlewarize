@@ -12,8 +12,8 @@
     ],
     "require": {
         "php": "7.3.*|7.4.*|^8.0",
-        "illuminate/container":"~5.1|6.*|7.*|8.*|9.*|10.*",
-        "illuminate/pipeline":"~5.1|6.*|7.*|8.*|9.*|10.*"
+        "illuminate/container":"~5.1|6.*|7.*|8.*|9.*|10.*|11.*",
+        "illuminate/pipeline":"~5.1|6.*|7.*|8.*|9.*|10.*|11.*"
     },
     "require-dev": {
         "orchestra/testbench": "~7.0"
