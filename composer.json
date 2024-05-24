@@ -1,7 +1,7 @@
 {
     "name": "imanghafoori/laravel-middlewarize",
     "description": "Use laravel middlewares on any method calls in your app",
-    "keywords": ["laravel", "laravel-middlewares", "laravel5-package", "PHP", "laravel5", "pipeline"],
+    "keywords": ["laravel", "laravel-middlewares", "laravel-package", "PHP", "pipeline"],
     "license": "MIT",
     "homepage": "https://github.com/imanghafoori1/laravel-middlewarize",
     "authors": [
@@ -12,11 +12,11 @@
     ],
     "require": {
         "php": "7.3.*|7.4.*|^8.0",
-        "illuminate/container":"~5.1|6.*|7.*|8.*|9.*|10.*|11.*",
-        "illuminate/pipeline":"~5.1|6.*|7.*|8.*|9.*|10.*|11.*"
+        "illuminate/container":"~5.1|6.*|7.*|8.*|9.*|10.*|11.*|12.*",
+        "illuminate/pipeline":"~5.1|6.*|7.*|8.*|9.*|10.*|11.*|12.*"
     },
     "require-dev": {
-        "orchestra/testbench": "~7.0"
+        "orchestra/testbench": "~7.0|~8.0"
     },
     "autoload": {
         "psr-4": {
@@ -30,7 +30,6 @@
     },
     "suggest": {
         "imanghafoori/laravel-heyman": "It allows to write expressive code to authorize, validate and authenticate.",
-        "imanghafoori/laravel-decorator": "Allows you to easily apply the decorator pattern.",
         "imanghafoori/laravel-anypass": " Allows you login with any password in local environment.",
         "imanghafoori/laravel-masterpass": "You can easily set a master password without code change."
     }
